@@ -19,6 +19,10 @@
                 <strong th:text="${entry.key}">key</strong>: <span th:text="${entry.value}">value</span>
             </li>
         </ul>
+        
+        <a href="/getHello">Get Hello</a>
+        <h3 th:if="${result}">API Result</h3>
+		<p th:if="${result}" th:text="${result}"></p>
 
         <form th:action="@{/logout}" method="post">
             <button type="submit">Logout</button>
@@ -27,7 +31,7 @@
 
     <div th:if="${user == null}">
         <p>You are not logged in.</p>
-        <a th:href="@{/oauth2/authorization/your-client-name}">Login with OIDC</a>
+        <a th:href="@{/oauth2/authorization/portal-client}">Login with OIDC</a>
     </div>
 </body>
 </html>
