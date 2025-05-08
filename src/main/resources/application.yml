@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: my-portal
+  security:
+    oauth2:
+      client:
+        registration:
+          portal-client:
+            client-id: portal-client
+            client-secret: portal-secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid,read
+            provider: portal-client-provider
+        provider:
+          portal-client-provider:
+            issuer-uri: http://localhost:8081
+logging:
+  level:
+    '[org.springframework.security]': debug
+    '[org.springframework.web]': debug

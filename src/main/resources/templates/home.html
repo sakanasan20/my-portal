@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome</h1>
+
+    <div th:if="${user != null}">
+        <p><strong>Name:</strong> <span th:text="${user.fullName}">User Name</span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></p>
+        <p><strong>Issuer:</strong> <span th:text="${user.issuer}">issuer-url</span></p>
+        <p><strong>Subject:</strong> <span th:text="${user.subject}">subject-id</span></p>
+
+        <h3>Claims</h3>
+        <ul>
+            <li th:each="entry : ${user.claims}">
+                <strong th:text="${entry.key}">key</strong>: <span th:text="${entry.value}">value</span>
+            </li>
+        </ul>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+
+    <div th:if="${user == null}">
+        <p>You are not logged in.</p>
+        <a th:href="@{/oauth2/authorization/your-client-name}">Login with OIDC</a>
+    </div>
+</body>
+</html>
