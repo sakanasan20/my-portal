@@ -1,6 +1,7 @@
 package com.niq_dev.portal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -14,6 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class HomeController {
+	
+    @Value("${oauth2.api-uri}")
+    private String apiUri;
 	
 	@Autowired
 	private WebClient webClient;
@@ -39,7 +43,7 @@ public class HomeController {
             String accessToken = client.getAccessToken().getTokenValue();
             
             String result = webClient.get()
-                    .uri("http://localhost:8081/api/auth/hello")
+                    .uri(apiUri)
                     .header("Authorization", "Bearer " + accessToken)
                     .retrieve()
                     .bodyToMono(String.class)
