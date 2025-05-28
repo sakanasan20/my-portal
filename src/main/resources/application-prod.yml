@@ -6,7 +6,7 @@ spring:
   data: 
     redis:
       host: niq-dev.com
-      port: 6379
+      port: 6380
       password: ${RD_PASSWORD}
   security:
     oauth2:

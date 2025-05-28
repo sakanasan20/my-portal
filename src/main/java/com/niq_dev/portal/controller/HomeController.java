@@ -1,5 +1,8 @@
 package com.niq_dev.portal.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +30,16 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String home(Model model, @AuthenticationPrincipal OidcUser oidcUser) {
+		if (oidcUser != null) {
+		    List<String> systems = Arrays.asList(oidcUser.getClaimAsString("systems").split(" "));
+		    List<String> modules = Arrays.asList(oidcUser.getClaimAsString("modules").split(" "));
+		    List<String> features = Arrays.asList(oidcUser.getClaimAsString("features").split(" "));
+		    model.addAttribute("systems", systems);
+		    model.addAttribute("modules", modules);
+		    model.addAttribute("features", features);
+		}
 		model.addAttribute("user", oidcUser);
+
 	    return "home";
 	}
 	

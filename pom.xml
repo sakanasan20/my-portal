@@ -32,6 +32,11 @@
 	
 	<properties>
 		<java.version>17</java.version>
+		<bootstrap.version>5.3.3</bootstrap.version>
+		<bootstrap-icon.version>1.11.3</bootstrap-icon.version>
+		<bootstrap-table.version>1.23.5</bootstrap-table.version>
+		<jquery.version>3.7.1</jquery.version>
+		<jquery-validation.version>1.20.0</jquery-validation.version>
 	</properties>
 	
 	<dependencies>
@@ -69,6 +74,46 @@
 			<artifactId>embedded-redis</artifactId>
 			<version>0.7.2</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+		
+		<!-- Bootstrap -->
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>${bootstrap.version}</version>
+		</dependency>
+		
+		<!-- Bootstrap Icon -->
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>bootstrap-icons</artifactId>
+			<version>${bootstrap-icon.version}</version>
+		</dependency>
+		
+		<!-- Bootstrap Table -->
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>bootstrap-table</artifactId>
+			<version>${bootstrap-table.version}</version>
+		</dependency>
+		
+		<!-- jQuery -->
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>jquery</artifactId>
+			<version>${jquery.version}</version>
+		</dependency>
+		
+		<!-- jQuery Validation -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery-validation</artifactId>
+			<version>${jquery-validation.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -81,7 +126,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
