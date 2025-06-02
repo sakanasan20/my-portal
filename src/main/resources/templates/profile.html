@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<body>
+	<div class="container my-5">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h2>個人檔案</h2>
+			<button class="btn btn-secondary mb-3 back-home-btn">
+				<i class="bi bi-arrow-left"></i> 返回首頁
+			</button>
+		</div>
+		<div class="card shadow-sm">
+			<div class="card-body">
+				<h5 class="card-title">使用者資訊</h5>
+				<dl class="row">
+					<dt class="col-sm-3">帳號</dt>
+					<dd class="col-sm-9" id="profile-username" th:text="${userinfo.username}">載入中...</dd>
+
+					<dt class="col-sm-3">Email</dt>
+					<dd class="col-sm-9" id="profile-email" th:text="${userinfo.email}">載入中...</dd>
+
+					<dt class="col-sm-3">加入時間</dt>
+					<dd class="col-sm-9" id="profile-created" th:text="${#temporals.format(createdAt, 'yyyy-MM-dd HH:mm:ss XXX')}">載入中...</dd>
+
+					<dt class="col-sm-3">角色</dt>
+					<dd class="col-sm-9" id="profile-roles">
+						<span class="badge bg-primary me-1" th:each="role : ${roles}" th:text="${role}"></span>						
+					</dd>
+
+					<dt class="col-sm-3">權限</dt>
+					<dd class="col-sm-9" id="profile-authorities">
+						<span class="badge bg-secondary me-1" th:each="authority : ${authorities}" th:text="${authority}"></span>	
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</body>

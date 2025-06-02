@@ -1,0 +1,90 @@
+<!-- Hero Section -->
+<div th:fragment="heroSection">
+	<header class="bg-primary text-white text-center py-5">
+			<!-- 未登入時顯示 -->
+			<div sec:authorize="isAnonymous()">
+				<h1 class="display-4">歡迎來到入口網站</h1>
+				<p class="lead">透過單一登入存取多個服務，享受簡潔一致的使用體驗。</p>
+				<a th:href="@{/oauth2/authorization/my-client}" class="btn btn-light btn-lg mt-3">立即登入</a>
+			</div>
+	
+			<!-- 已登入時顯示 -->
+			<div sec:authorize="isAuthenticated()">
+				<h1 class="display-4">
+					歡迎回來！<span sec:authentication="name"></span>
+				</h1>
+				<p class="lead">您已成功登入，請選擇下方功能開始操作。</p>
+				<a href="/profile" class="btn btn-light btn-lg mt-3 me-2 spa-link">前往個人資料</a>
+			</div>
+	</header>
+</div>
+
+<!-- Main Content -->
+<div th:fragment="main">
+	<main class="container my-5">
+		<h2 class="mb-4 text-center">可用資源</h2>
+		<div class="row row-cols-1 row-cols-md-3 g-4">
+
+			<div class="col">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title">系統管理</h5>
+						<p class="card-text">管理系統、模組與功能。</p>
+						<a href="/admin" class="btn btn-primary spa-link">前往</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title">IAM</h5>
+						<p class="card-text">管理用戶、角色與權限。</p>
+						<a href="/iam" class="btn btn-primary spa-link">前往</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title">API 測試頁</h5>
+						<p class="card-text">使用 Access Token 存取保護資源。</p>
+						<a href="/api-test" class="btn btn-primary spa-link">前往</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title">License 中心</h5>
+						<p class="card-text">註冊與查詢 License。</p>
+						<a href="/license" class="btn btn-primary spa-link">前往</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col" th:if="${systems?.contains('system:scm')}">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title">SCM 系統</h5>
+						<p class="card-text">使用供應鏈管理系統相關功能。</p>
+						<a href="/license" class="btn btn-primary spa-link">前往</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col" th:if="${systems?.contains('system:crm')}">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title">CRM</h5>
+						<p class="card-text">使用客戶關係管理系統相關功能。</p>
+						<a href="/license" class="btn btn-primary spa-link">前往</a>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</main>
+</div>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<body>
+	<div class="container my-5">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h2>系統管理</h2>
+			<button class="btn btn-secondary mb-3 back-home-btn">
+				<i class="bi bi-arrow-left"></i> 返回首頁
+			</button>
+		</div>
+
+		<div class="accordion" id="systemAccordion">
+			<div class="accordion-item" th:each="system, sStat : ${systems}">
+				<h2 class="accordion-header"
+					th:attr="id='heading__' + ${sStat.index}">
+					<button class="accordion-button" type="button"
+						data-bs-toggle="collapse"
+						th:data-bs-target="'#collapse__' + ${sStat.index}"
+						aria-expanded="true"
+						th:aria-controls="'collapse__' + ${sStat.index}">
+						<strong th:text="${system.name}">系統名稱</strong>
+					</button>
+				</h2>
+				<div class="accordion-collapse collapse"
+					th:classappend="${sStat.index == 0} ? ' show'"
+					th:attr="id='collapse__' + ${sStat.index}"
+					th:attrappend="aria-labelledby='heading__' + ${sStat.index}"
+					data-bs-parent="#systemAccordion">
+					<div class="accordion-body">
+
+						<ul class="list-group" th:each="module : ${system.modules}">
+							<li class="list-group-item"><strong th:text="${module.name}">模組名稱</strong>
+
+								<ul class="mt-2 ms-3">
+									<li th:each="feature : ${module.features}"><span
+										th:text="${feature.name}">功能名稱</span>
+										<button class="btn btn-sm btn-outline-secondary ms-2">編輯</button>
+										<button class="btn btn-sm btn-outline-danger">刪除</button></li>
+								</ul></li>
+						</ul>
+
+					</div>
+				</div>				
+			</div>
+		</div>
+
+<table id="table"></table>
+
+<script>
+  const $table = $('#table')
+
+  $(function() {
+    $table.bootstrapTable({
+      url: '/admin/systems',
+      dataType: 'json',
+      idField: 'code',
+      showColumns: true,
+      columns: [
+        {
+          field: 'ck',
+          checkbox: true
+        },
+        {
+          field: 'name',
+          title: '名称'
+        },
+        {
+          field: 'status',
+          title: '状态',
+          sortable: true,
+          align: 'center',
+          formatter: 'statusFormatter'
+        },
+        {
+          field: 'code',
+          title: '权限值'
+        }
+      ],
+      treeEnable: true,
+      treeShowField: 'name',
+      parentIdField: 'parentCode',
+      onPostBody () {
+    	  const columns = $table.bootstrapTable('getOptions').columns;
+    	  console.log(columns);
+    	  if (columns && columns[0][1].visible) {
+    		  console.log('inside');
+    	    $table.treegrid({
+    	      treeColumn: 1, // name 欄位是樹狀節點
+    	      initialState: 'collapsed', // 🟡 關鍵：初始時 collapsed
+    	      expanderExpandedClass: 'treegrid-expanded', // 🟢 加上 class
+    	      expanderCollapsedClass: 'treegrid-collapsed', // 🟢 加上 class
+    	      onChange() {
+    	        $table.bootstrapTable('resetView');
+    	      }
+    	    });
+    	  }
+    	  console.log('Done');
+      }
+    })
+  })
+
+  window.typeFormatter = value => {
+    if (value === 'menu') {
+      return '菜单'
+    }
+    if (value === 'button') {
+      return '按钮'
+    }
+    if (value === 'api') {
+      return '接口'
+    }
+    return '-'
+  }
+
+  window.statusFormatter = value => {
+    if (value === 1) {
+      return '<span class="label label-success">正常</span>'
+    }
+    return '<span class="label label-default">锁定</span>'
+  }
+</script>
+
+	</div>
+</body>
+</html>

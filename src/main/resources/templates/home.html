@@ -2,90 +2,17 @@
 <html lang="zh-Hant" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
-<head>
-	<meta charset="UTF-8">
-	<title th:text="${title}">My Portal</title>
-	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/dist/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css}">
-	<link rel="stylesheet" th:href="@{/webjars/bootstrap-table/1.23.5/dist/bootstrap-table.min.css}">
-	<link rel="stylesheet" th:href="@{/css/styles.css}">
-</head>
+	
+<head th:replace="fragments/common :: head('Portal Home')"></head>
+
 <body>
-    <h1>Welcome</h1>
-    
-    <div class="row">
-    	<div class="col">
-			<div class="card" th:if="${systems?.contains('system:scm')}">
-				<h5 class="card-header">SCM</h5>
-				<div class="card-body" th:if="${modules?.contains('module:scm.supplier')}">
-					<h5 class="card-title">Supplier Module</h5>
-					<a href="#" class="btn btn-primary" th:if="${features?.contains('feature:scm.supplier.create-purchase-order')}">Create Purchase Order</a>
-				</div>
-			</div>
-		</div>
-		<div class="col">
-			<div class="card" th:if="${systems?.contains('system:scm')}">
-				<h5 class="card-header">SCM</h5>
-				<div class="card-body" th:if="${modules?.contains('module:scm.inventory')}">
-					<h5 class="card-title">Inventory Module</h5>
-					<a href="#" class="btn btn-primary" th:if="${features?.contains('feature:scm.supplier.export-inventory-report')}">Export Inventory Report</a>
-				</div>
-			</div>
-		</div>
-		<div class="col"></div>
-    </div>
-    
-        <div class="row">
-    	<div class="col">
-			<div class="card" th:if="${systems?.contains('system:crm')}">
-				<h5 class="card-header">CRM</h5>
-				<div class="card-body" th:if="${modules?.contains('module:crm.sales')}">
-					<h5 class="card-title">Sales Module</h5>
-					<a href="#" class="btn btn-primary" th:if="${features?.contains('feature:crm.sales.view-sales-report')}">View Sales Report</a>
-				</div>
-			</div>
-		</div>
-		<div class="col">
-			<div class="card" th:if="${systems?.contains('system:crm')}">
-				<h5 class="card-header">CRM</h5>
-				<div class="card-body" th:if="${modules?.contains('module:crm.contact')}">
-					<h5 class="card-title">Contact Module</h5>
-					<a href="#" class="btn btn-primary" th:if="${features?.contains('feature:crm.contact.create-contact')}">Create Contact</a>
-				</div>
-			</div>
-		</div>
-		<div class="col"></div>
-    </div>
+	<div th:replace="fragments/layout :: navbar"></div>
 
-    <div th:if="${user != null}">
-        <p><strong>Name:</strong> <span th:text="${user.fullName}">User Name</span></p>
-        <p><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></p>
-        <p><strong>Issuer:</strong> <span th:text="${user.issuer}">issuer-url</span></p>
-        <p><strong>Subject:</strong> <span th:text="${user.subject}">subject-id</span></p>
-        <p><strong>Authorities:</strong> <span th:text="${user.authorities}">authorities</span></p>
-		<p><strong>systems:</strong> <span th:text="${systems}">systems</span></p>
-		<p><strong>modules:</strong> <span th:text="${modules}">modules</span></p>
-		<p><strong>features:</strong> <span th:text="${features}">features</span></p>
-		
-        <h3>Claims</h3>
-        <ul>
-            <li th:each="entry : ${user.claims}">
-                <strong th:text="${entry.key}">key</strong>: <span th:text="${entry.value}">value</span>
-            </li>
-        </ul>
-        
-        <a href="/getHello">Get Hello</a>
-        <h3 th:if="${result}">API Result</h3>
-		<p th:if="${result}" th:text="${result}"></p>
+	<div id="spa-container">
+		<div id="hero-section" th:replace="fragments/fragments :: heroSection"></div>
+	    <div th:replace="fragments/fragments :: main"></div>
+	</div>
 
-        <form th:action="@{/logout}" method="post">
-            <button type="submit">Logout</button>
-        </form>
-    </div>
-
-    <div th:if="${user == null}">
-        <p>You are not logged in.</p>
-        <a th:href="@{/oauth2/authorization/portal-client}">Login with OIDC</a>
-    </div>
+	<div th:replace="fragments/common :: scripts"></div>
 </body>
 </html>

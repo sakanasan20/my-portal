@@ -1,0 +1,79 @@
+<!-- Common Head -->
+<head th:fragment="head(title)">
+	<meta charset="UTF-8">
+	<title th:text="${title}">Portal</title>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/dist/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-table/1.23.5/dist/bootstrap-table.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/jquery-treegrid/0.3.0/css/jquery.treegrid.css}">
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<!-- Common Script -->
+<div th:fragment="scripts">
+	<script th:src="@{/webjars/bootstrap/5.3.3/dist/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/webjars/jquery/3.7.1/dist/jquery.min.js}"></script>
+	<script th:src="@{/webjars/jquery-validation/1.20.0/jquery.validate.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-table/1.23.5/dist/bootstrap-table.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-table/1.23.5/dist/bootstrap-table-locale-all.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap-table/1.23.5/dist/extensions/treegrid/bootstrap-table-treegrid.min.js}"></script>
+	<script th:src="@{/webjars/jquery-treegrid/0.3.0/js/jquery.treegrid.min.js}"></script>
+	<script>
+	// 載入 SPA Container
+	const loadSpaContainer = function (urlWithHash, callback) {
+		const [url, hash] = urlWithHash.split("#");
+		
+		$.get(url)
+            .done(function (data) {
+                $("#spa-container").html(data);
+                
+             	// 等待 DOM 插入後處理 hash
+                if (hash) {
+                    setTimeout(() => {
+                        const target = document.getElementById(hash) || document.querySelector(`[name='${hash}']`);
+                        
+                        if (target) {
+                        	// 處理 Bootstrap tab 切換
+                            const tabTrigger = document.querySelector(`[data-bs-toggle="tab"][data-bs-target="#${hash}"]`);
+                            
+                        	if (tabTrigger) {
+                                new bootstrap.Tab(tabTrigger).show();
+                            } else {
+                                // 若非 tab，用 scrollIntoView 處理一般錨點
+                                const target = document.getElementById(hash) || document.querySelector(`[name='${hash}']`);
+                                
+                                if (target) {
+                                    target.scrollIntoView({ behavior: "smooth" });
+                                }
+                            }
+                        }
+                    }, 100);
+                }
+             	
+             	// 呼叫 callback（如果有）
+                if (typeof callback === "function") {
+    				callback();
+    			}
+            })
+            .fail(function () {
+                $("#spa-container").html(
+                    "<div class='alert alert-danger'>無法載入內容，請稍後再試。<button class='btn btn-sm btn-link back-home-btn'>返回首頁</button></div></div>"
+                );
+            });
+	}
+	
+	// 按下前往
+    $(document).ready(function () {
+        $(".spa-link").on("click", function (e) {
+            e.preventDefault();
+            const url = $(this).attr("href");
+            loadSpaContainer(url);
+        });
+    });
+    
+    // 按下返回首頁
+    $(document).off("click", ".back-home-btn").on("click", ".back-home-btn", function () {
+        location.reload();
+    });
+	</script>
+</div>

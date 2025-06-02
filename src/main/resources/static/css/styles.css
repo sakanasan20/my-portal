@@ -1,0 +1,14 @@
+.treegrid-expander {
+  display: inline-block;
+  width: 1em;
+  cursor: pointer;
+}
+.treegrid-expanded > td > .treegrid-expander::before {
+  content: "▼";
+}
+.treegrid-collapsed > td > .treegrid-expander::before {
+  content: "▶";
+}
+.treegrid-leaf > td > .treegrid-expander::before {
+  content: "";
+}
