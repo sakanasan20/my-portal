@@ -33,6 +33,8 @@ public class AdminRestController {
 			map.put("name", system.getName());
 			map.put("description", system.getDescription());
 			map.put("parentCode", null);
+			map.put("id", system.getCode().replace(":", "_").replace(".", "_"));
+			map.put("pid", null);
 	        flatList.add(map);
 	        System.out.println(system);
 		});
@@ -42,6 +44,8 @@ public class AdminRestController {
 			map.put("name", module.getName());
 			map.put("description", module.getDescription());
 			map.put("parentCode", module.getParentCode());
+			map.put("id", module.getCode().replace(":", "_").replace(".", "_"));
+			map.put("pid", module.getParentCode().replace(":", "_").replace(".", "_"));
 	        flatList.add(map);
 			System.out.println(module);
 		});
@@ -51,6 +55,8 @@ public class AdminRestController {
 			map.put("name", feature.getName());
 			map.put("description", feature.getDescription());
 			map.put("parentCode", feature.getParentCode());
+			map.put("id", feature.getCode().replace(":", "_").replace(".", "_"));
+			map.put("pid", feature.getParentCode().replace(":", "_").replace(".", "_"));
 	        flatList.add(map);
 			System.out.println(feature);
 		});

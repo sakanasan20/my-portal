@@ -41,86 +41,58 @@
 						</ul>
 
 					</div>
-				</div>				
+				</div>
 			</div>
 		</div>
 
-<table id="table"></table>
+		<table id="table"></table>
 
-<script>
-  const $table = $('#table')
-
-  $(function() {
-    $table.bootstrapTable({
-      url: '/admin/systems',
-      dataType: 'json',
-      idField: 'code',
-      showColumns: true,
-      columns: [
-        {
-          field: 'ck',
-          checkbox: true
-        },
-        {
-          field: 'name',
-          title: '名称'
-        },
-        {
-          field: 'status',
-          title: '状态',
-          sortable: true,
-          align: 'center',
-          formatter: 'statusFormatter'
-        },
-        {
-          field: 'code',
-          title: '权限值'
-        }
-      ],
-      treeEnable: true,
-      treeShowField: 'name',
-      parentIdField: 'parentCode',
-      onPostBody () {
-    	  const columns = $table.bootstrapTable('getOptions').columns;
-    	  console.log(columns);
-    	  if (columns && columns[0][1].visible) {
-    		  console.log('inside');
-    	    $table.treegrid({
-    	      treeColumn: 1, // name 欄位是樹狀節點
-    	      initialState: 'collapsed', // 🟡 關鍵：初始時 collapsed
-    	      expanderExpandedClass: 'treegrid-expanded', // 🟢 加上 class
-    	      expanderCollapsedClass: 'treegrid-collapsed', // 🟢 加上 class
-    	      onChange() {
-    	        $table.bootstrapTable('resetView');
-    	      }
-    	    });
-    	  }
-    	  console.log('Done');
-      }
-    })
-  })
-
-  window.typeFormatter = value => {
-    if (value === 'menu') {
-      return '菜单'
-    }
-    if (value === 'button') {
-      return '按钮'
-    }
-    if (value === 'api') {
-      return '接口'
-    }
-    return '-'
-  }
-
-  window.statusFormatter = value => {
-    if (value === 1) {
-      return '<span class="label label-success">正常</span>'
-    }
-    return '<span class="label label-default">锁定</span>'
-  }
+		<script>
+			const $table = $('#table')
+			
+			$(function() {
+				$table.bootstrapTable({
+					url: '/admin/systems',
+					idField: 'id',
+					showColumns: true,
+					columns: [
+						{
+							field: 'ck',
+							checkbox: true
+						},
+						{
+							field: 'name',
+							title: 'name'
+						},
+						{
+							field: 'code',
+							title: 'code'
+						},
+						{
+							field: 'parentCode',
+							title: 'parentCode'
+						}
+					],
+					treeShowField: 'name',
+					parentIdField: 'pid',
+					onPostBody () {
+						const columns = $table.bootstrapTable('getOptions').columns
+						
+						if (columns && columns[0][1].visible) {
+							$table.treegrid({
+								treeColumn: 1,
+								initialState: 'collapsed',
+								expanderExpandedClass: 'bi bi-caret-down-fill',
+								expanderCollapsedClass: 'bi bi-caret-right-fill',
+								onChange () {
+									$table.bootstrapTable('resetView')
+								}
+							})
+						}
+					}
+				})
+			})
 </script>
-
 	</div>
 </body>
 </html>
