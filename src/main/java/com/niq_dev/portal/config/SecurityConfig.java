@@ -22,6 +22,8 @@ public class SecurityConfig {
             )
             .logout(logout -> logout
                 .logoutSuccessHandler((request, response, authentication) -> {
+                    // TODO 撤銷 refresh token
+                    
                     // 這裡是 Redirect 登出到授權伺服器的 logout URL
                     response.sendRedirect(logoutRedirectUri);
                 })
@@ -29,4 +31,5 @@ public class SecurityConfig {
             .oauth2Login(oauth2 -> oauth2.defaultSuccessUrl("/", true)); // 啟用 OAuth2 login
         return http.build();
     }
+    
 }

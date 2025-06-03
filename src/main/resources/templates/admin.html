@@ -9,90 +9,9 @@
 				<i class="bi bi-arrow-left"></i> 返回首頁
 			</button>
 		</div>
-
-		<div class="accordion" id="systemAccordion">
-			<div class="accordion-item" th:each="system, sStat : ${systems}">
-				<h2 class="accordion-header"
-					th:attr="id='heading__' + ${sStat.index}">
-					<button class="accordion-button" type="button"
-						data-bs-toggle="collapse"
-						th:data-bs-target="'#collapse__' + ${sStat.index}"
-						aria-expanded="true"
-						th:aria-controls="'collapse__' + ${sStat.index}">
-						<strong th:text="${system.name}">系統名稱</strong>
-					</button>
-				</h2>
-				<div class="accordion-collapse collapse"
-					th:classappend="${sStat.index == 0} ? ' show'"
-					th:attr="id='collapse__' + ${sStat.index}"
-					th:attrappend="aria-labelledby='heading__' + ${sStat.index}"
-					data-bs-parent="#systemAccordion">
-					<div class="accordion-body">
-
-						<ul class="list-group" th:each="module : ${system.modules}">
-							<li class="list-group-item"><strong th:text="${module.name}">模組名稱</strong>
-
-								<ul class="mt-2 ms-3">
-									<li th:each="feature : ${module.features}"><span
-										th:text="${feature.name}">功能名稱</span>
-										<button class="btn btn-sm btn-outline-secondary ms-2">編輯</button>
-										<button class="btn btn-sm btn-outline-danger">刪除</button></li>
-								</ul></li>
-						</ul>
-
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<table id="table"></table>
 
-		<script>
-			const $table = $('#table')
-			
-			$(function() {
-				$table.bootstrapTable({
-					url: '/admin/systems',
-					idField: 'id',
-					showColumns: true,
-					columns: [
-						{
-							field: 'ck',
-							checkbox: true
-						},
-						{
-							field: 'name',
-							title: 'name'
-						},
-						{
-							field: 'code',
-							title: 'code'
-						},
-						{
-							field: 'parentCode',
-							title: 'parentCode'
-						}
-					],
-					treeShowField: 'name',
-					parentIdField: 'pid',
-					onPostBody () {
-						const columns = $table.bootstrapTable('getOptions').columns
-						
-						if (columns && columns[0][1].visible) {
-							$table.treegrid({
-								treeColumn: 1,
-								initialState: 'collapsed',
-								expanderExpandedClass: 'bi bi-caret-down-fill',
-								expanderCollapsedClass: 'bi bi-caret-right-fill',
-								onChange () {
-									$table.bootstrapTable('resetView')
-								}
-							})
-						}
-					}
-				})
-			})
-</script>
+		<script th:src="@{/js/admin.js}"></script>
 	</div>
 </body>
 </html>
