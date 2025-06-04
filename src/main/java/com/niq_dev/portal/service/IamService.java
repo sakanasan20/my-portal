@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.niq_dev.portal.dto.AuthorityDto;
-import com.niq_dev.portal.dto.RoleDto;
-import com.niq_dev.portal.dto.UserDto;
+import com.niq_dev.portal.dto.iam.AuthorityDto;
+import com.niq_dev.portal.dto.iam.RoleDto;
+import com.niq_dev.portal.dto.iam.UserDto;
+import com.niq_dev.portal.service.common.ApiClientService;
+import com.niq_dev.portal.service.common.ApiPaths;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -43,16 +44,16 @@ public class IamService {
                 .toUriString();
     }
 
-    public List<UserDto> getUsers(OAuth2AuthenticationToken authentication) {
-        return apiClientService.fetchData(authentication, usersUrl, new ParameterizedTypeReference<List<UserDto>>() {});
+    public List<UserDto> getUsers() {
+        return apiClientService.fetchData(usersUrl, new ParameterizedTypeReference<List<UserDto>>() {});
     }
 
-    public List<RoleDto> getRoles(OAuth2AuthenticationToken authentication) {
-        return apiClientService.fetchData(authentication, rolesUrl, new ParameterizedTypeReference<List<RoleDto>>() {});
+    public List<RoleDto> getRoles() {
+        return apiClientService.fetchData(rolesUrl, new ParameterizedTypeReference<List<RoleDto>>() {});
     }
 
-    public List<AuthorityDto> getAuthorities(OAuth2AuthenticationToken authentication) {
-        return apiClientService.fetchData(authentication, authoritiesUrl, new ParameterizedTypeReference<List<AuthorityDto>>() {});
+    public List<AuthorityDto> getAuthorities() {
+        return apiClientService.fetchData(authoritiesUrl, new ParameterizedTypeReference<List<AuthorityDto>>() {});
     }
 
 }

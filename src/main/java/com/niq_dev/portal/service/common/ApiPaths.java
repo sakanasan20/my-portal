@@ -1,4 +1,4 @@
-package com.niq_dev.portal.service;
+package com.niq_dev.portal.service.common;
 
 public enum ApiPaths {
 	SYSTEMS("/api/v1/systems"), 

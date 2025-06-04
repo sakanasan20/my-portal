@@ -1,8 +1,6 @@
-package com.niq_dev.portal.dto;
+package com.niq_dev.portal.dto.iam;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,16 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleDto {
-
-    private Long id;
+public class AuthorityDto {
+	
+	private Long id;
 
     private String name;
 
     private String description;
-    
-    @Builder.Default
-    private Set<AuthorityDto> authorities = new HashSet<>();
     
     private LocalDateTime createdAt;
 

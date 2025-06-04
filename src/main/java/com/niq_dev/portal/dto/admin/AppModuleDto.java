@@ -1,4 +1,4 @@
-package com.niq_dev.portal.dto;
+package com.niq_dev.portal.dto.admin;
 
 import java.util.List;
 
@@ -11,16 +11,20 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppSystemDto {
+public class AppModuleDto {
 
     private Long id;
-
+    
     private String code;
-
+    
     private String name;
-
+    
     private String description;
-
-    private List<AppModuleDto> modules;
+    
+    private List<AppFeatureDto> features;
+    
+    private String parentCode;
+    
+    private Long systemId;
 	
 }

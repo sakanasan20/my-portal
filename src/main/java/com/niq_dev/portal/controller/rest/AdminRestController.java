@@ -1,4 +1,4 @@
-package com.niq_dev.portal.controller;
+package com.niq_dev.portal.controller.rest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,12 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.niq_dev.portal.dto.AppModuleDto;
-import com.niq_dev.portal.dto.AppSystemDto;
+import com.niq_dev.portal.dto.admin.AppModuleDto;
+import com.niq_dev.portal.dto.admin.AppSystemDto;
 import com.niq_dev.portal.service.AdminService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,8 +22,8 @@ public class AdminRestController {
 	private final AdminService adminService;
 	
 	@GetMapping("/admin/systems")
-	public List<Map<String, Object>> getSystems(OAuth2AuthenticationToken authentication) {
-		List<AppSystemDto> systems = adminService.getSystems(authentication);
+	public List<Map<String, Object>> getSystems() {
+		List<AppSystemDto> systems = adminService.getSystems();
 
 		List<Map<String, Object>> flatList = new ArrayList<>();
 		

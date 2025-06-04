@@ -4,6 +4,9 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.niq_dev.portal.dto.admin.AppModuleDto;
+import com.niq_dev.portal.dto.admin.AppSystemDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

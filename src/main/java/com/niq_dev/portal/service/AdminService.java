@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.niq_dev.portal.dto.AppSystemDto;
+import com.niq_dev.portal.dto.admin.AppSystemDto;
+import com.niq_dev.portal.service.common.ApiClientService;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +31,8 @@ public class AdminService {
                 .toUriString();
     }
 
-	public List<AppSystemDto> getSystems(OAuth2AuthenticationToken authentication) {
-		return apiClientService.fetchData(authentication, systemsUrl, new ParameterizedTypeReference<List<AppSystemDto>>() {});
+	public List<AppSystemDto> getSystems() {
+		return apiClientService.fetchData(systemsUrl, new ParameterizedTypeReference<List<AppSystemDto>>() {});
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.niq_dev.portal.controller;
+package com.niq_dev.portal.controller.web;
 
 import java.time.ZonedDateTime;
 import java.util.Arrays;

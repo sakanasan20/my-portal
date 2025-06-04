@@ -1,4 +1,4 @@
-package com.niq_dev.portal.controller;
+package com.niq_dev.portal.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

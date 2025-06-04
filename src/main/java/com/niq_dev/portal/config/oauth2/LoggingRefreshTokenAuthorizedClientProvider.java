@@ -1,4 +1,4 @@
-package com.niq_dev.portal.config;
+package com.niq_dev.portal.config.oauth2;
 
 import org.springframework.security.oauth2.client.OAuth2AuthorizationContext;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;

@@ -1,4 +1,4 @@
-package com.niq_dev.portal.service;
+package com.niq_dev.portal.service.common;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

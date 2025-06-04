@@ -1,4 +1,4 @@
-package com.niq_dev.portal.config;
+package com.niq_dev.portal.config.oauth2;
 
 import org.springframework.stereotype.Component;
 

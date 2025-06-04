@@ -1,4 +1,4 @@
-package com.niq_dev.portal.service;
+package com.niq_dev.portal.service.common;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.client.ClientAuthorizationRequiredException;

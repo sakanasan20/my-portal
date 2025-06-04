@@ -1,4 +1,4 @@
-package com.niq_dev.portal.dto;
+package com.niq_dev.portal.dto.iam;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.niq_dev.portal.dto.LicenseDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
