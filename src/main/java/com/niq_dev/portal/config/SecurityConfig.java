@@ -1,19 +1,42 @@
 package com.niq_dev.portal.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.niq_dev.portal.service.OAuthClientService;
+import com.niq_dev.portal.service.TokenRevocationService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 public class SecurityConfig {
 	
     @Value("${oauth2.logout-redirect-uri}")
     private String logoutRedirectUri;
+    
+    private static final String CLIENT_ID = "portal-client";
+    
+    @Autowired
+    private TokenRevocationService tokenRevocationService;
+    
+    @Autowired
+    private OAuthClientService oAuthClientService;
 
     @Bean
-    SecurityFilterChain clientSecurityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain clientSecurityFilterChain(HttpSecurity http,
+    	    OAuth2AuthorizedClientRepository authorizedClientRepository, 
+    	    ClientRegistrationRepository clientRegistrationRepository, 
+    	    OAuth2AuthorizedClientService authorizedClientService) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
         		.requestMatchers("/resources/**", "/webjars/**", "/css/**", "/js/**", "/img/**").permitAll()
@@ -22,9 +45,26 @@ public class SecurityConfig {
             )
             .logout(logout -> logout
                 .logoutSuccessHandler((request, response, authentication) -> {
-                    // TODO 撤銷 refresh token
+                	if (authentication instanceof OAuth2AuthenticationToken) {
+                        // Step 2: 呼叫 token revocation endpoint（如支援）
+                        // 可選：你可以呼叫 revokeRefreshToken(refreshToken)
+                        OAuth2AuthorizedClient client = oAuthClientService.getAuthorizedClient((OAuth2AuthenticationToken) authentication, CLIENT_ID);
+                        if (client != null && client.getRefreshToken() != null) {
+                            String refreshToken = client.getRefreshToken().getTokenValue();
+                            tokenRevocationService.revokeRefreshToken(refreshToken)
+											.doOnSuccess(unused -> log.info("Refresh token revoked."))
+											.doOnError(error -> log.warn("Revocation failed: {}", error.getMessage()))
+											.subscribe(); // 非阻塞呼叫
+                        }
+                	}
+
+                 // Step 1: 移除已授權 client (從 session 或 cookie)
+                    if (authentication != null) {
+                        authorizedClientRepository.removeAuthorizedClient(CLIENT_ID, authentication, request, response);
+                        log.info(CLIENT_ID + " 已移除");
+                    }
                     
-                    // 這裡是 Redirect 登出到授權伺服器的 logout URL
+                    // Step 3: 導向 logout URL
                     response.sendRedirect(logoutRedirectUri);
                 })
     		)
