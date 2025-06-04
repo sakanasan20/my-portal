@@ -46,25 +46,24 @@ public class SecurityConfig {
             .logout(logout -> logout
                 .logoutSuccessHandler((request, response, authentication) -> {
                 	if (authentication instanceof OAuth2AuthenticationToken) {
-                        // Step 2: 呼叫 token revocation endpoint（如支援）
-                        // 可選：你可以呼叫 revokeRefreshToken(refreshToken)
+                        // 作廢 refresh token
                         OAuth2AuthorizedClient client = oAuthClientService.getAuthorizedClient((OAuth2AuthenticationToken) authentication, CLIENT_ID);
                         if (client != null && client.getRefreshToken() != null) {
                             String refreshToken = client.getRefreshToken().getTokenValue();
                             tokenRevocationService.revokeRefreshToken(refreshToken)
 											.doOnSuccess(unused -> log.info("Refresh token revoked."))
 											.doOnError(error -> log.warn("Revocation failed: {}", error.getMessage()))
-											.subscribe(); // 非阻塞呼叫
+											.subscribe();
                         }
                 	}
 
-                 // Step 1: 移除已授權 client (從 session 或 cookie)
+                	// 移除已授權 client (從 session 或 cookie)
                     if (authentication != null) {
                         authorizedClientRepository.removeAuthorizedClient(CLIENT_ID, authentication, request, response);
                         log.info(CLIENT_ID + " 已移除");
                     }
                     
-                    // Step 3: 導向 logout URL
+                    // 導向 logout URL
                     response.sendRedirect(logoutRedirectUri);
                 })
     		)
