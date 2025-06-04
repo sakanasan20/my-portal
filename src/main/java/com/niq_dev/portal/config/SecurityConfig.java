@@ -24,7 +24,8 @@ public class SecurityConfig {
     @Value("${oauth2.logout-redirect-uri}")
     private String logoutRedirectUri;
     
-    private static final String CLIENT_ID = "portal-client";
+	@Value("${oauth2.client-id}")
+	private String clientId;
     
     @Autowired
     private TokenRevocationService tokenRevocationService;
@@ -47,7 +48,7 @@ public class SecurityConfig {
                 .logoutSuccessHandler((request, response, authentication) -> {
                 	if (authentication instanceof OAuth2AuthenticationToken) {
                         // 作廢 refresh token
-                        OAuth2AuthorizedClient client = oAuthClientService.getAuthorizedClient((OAuth2AuthenticationToken) authentication, CLIENT_ID);
+                        OAuth2AuthorizedClient client = oAuthClientService.getAuthorizedClient((OAuth2AuthenticationToken) authentication, clientId);
                         if (client != null && client.getRefreshToken() != null) {
                             String refreshToken = client.getRefreshToken().getTokenValue();
                             tokenRevocationService.revokeRefreshToken(refreshToken)
@@ -59,8 +60,8 @@ public class SecurityConfig {
 
                 	// 移除已授權 client (從 session 或 cookie)
                     if (authentication != null) {
-                        authorizedClientRepository.removeAuthorizedClient(CLIENT_ID, authentication, request, response);
-                        log.info(CLIENT_ID + " 已移除");
+                        authorizedClientRepository.removeAuthorizedClient(clientId, authentication, request, response);
+                        log.info(clientId + " 已移除");
                     }
                     
                     // 導向 logout URL

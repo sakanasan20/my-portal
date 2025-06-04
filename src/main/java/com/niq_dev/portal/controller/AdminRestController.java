@@ -25,8 +25,9 @@ public class AdminRestController {
 	@GetMapping("/admin/systems")
 	public List<Map<String, Object>> getSystems(OAuth2AuthenticationToken authentication) {
 		List<AppSystemDto> systems = adminService.getSystems(authentication);
-		System.out.println("systems: " + systems);
+
 		List<Map<String, Object>> flatList = new ArrayList<>();
+		
 		systems.stream().forEach(system -> {
 			Map<String, Object> map = new HashMap<>();
 			map.put("code", system.getCode());
@@ -36,8 +37,9 @@ public class AdminRestController {
 			map.put("id", system.getCode().replace(":", "_").replace(".", "_"));
 			map.put("pid", null);
 	        flatList.add(map);
-	        System.out.println(system);
+
 		});
+		
 		systems.stream().map(AppSystemDto::getModules).flatMap(Collection::stream).forEach(module -> {
 			Map<String, Object> map = new HashMap<>();
 			map.put("code", module.getCode());
@@ -47,8 +49,8 @@ public class AdminRestController {
 			map.put("id", module.getCode().replace(":", "_").replace(".", "_"));
 			map.put("pid", module.getParentCode().replace(":", "_").replace(".", "_"));
 	        flatList.add(map);
-			System.out.println(module);
 		});
+		
 		systems.stream().map(AppSystemDto::getModules).flatMap(Collection::stream).map(AppModuleDto::getFeatures).flatMap(Collection::stream).forEach(feature -> {
 			Map<String, Object> map = new HashMap<>();
 			map.put("code", feature.getCode());
@@ -58,9 +60,8 @@ public class AdminRestController {
 			map.put("id", feature.getCode().replace(":", "_").replace(".", "_"));
 			map.put("pid", feature.getParentCode().replace(":", "_").replace(".", "_"));
 	        flatList.add(map);
-			System.out.println(feature);
 		});
-		System.out.println("flatList: " + flatList);
+
 	    return flatList;
 	}
 	

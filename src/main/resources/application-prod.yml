@@ -1,6 +1,10 @@
 oauth2:
   logout-redirect-uri: https://auth.niq-dev.com/oidc/logout?post_logout_redirect_uri=https://portal.niq-dev.com/
   api-uri: https://auth.niq-dev.com/api/auth/hello
+  api-base-url: https://auth.niq-dev.com
+  auth-server-url: https://auth.niq-dev.com
+  client-id: portal-client
+  client-secret: portal-secret
 
 spring:
   data: 
