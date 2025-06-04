@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<body>
+	<div class="container my-5">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h2>License</h2>
+			<button class="btn btn-secondary mb-3 back-home-btn">
+				<i class="bi bi-arrow-left"></i> 返回首頁
+			</button>
+		</div>
+		<table id="licenseTable" class="table" data-toggle="table" data-search="true" data-pagination="true"></table>
+
+		<script th:src="@{/js/license.js}"></script>
+	</div>
+</body>
+</html>

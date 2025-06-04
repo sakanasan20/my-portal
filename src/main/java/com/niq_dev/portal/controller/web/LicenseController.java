@@ -7,11 +7,11 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class IamController {
+public class LicenseController {
 	
-	@GetMapping("/iam")
-	public String home() {
-	    return "iam";
+	@GetMapping("/license")
+	public String license() {
+	    return "license";
 	}
 	
 }
