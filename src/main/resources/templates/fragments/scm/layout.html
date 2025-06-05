@@ -1,0 +1,27 @@
+<!-- sidebar -->
+<div th:fragment="sidebar">
+	<div class="sidebar">
+	    <h4 class="text-center">
+	        <a th:href="@{/scm}" class="text-decoration-none text-dark">
+		        <i class="bi bi-box"></i> SCM 系統
+		    </a>
+	    </h4>
+	    <div class="list-group list-group-flush">
+	        <a href="#" th:href="@{/scm/dashboard}" class="list-group-item list-group-item-action">
+	            <i class="bi bi-house"></i> 儀表板
+	        </a>
+	        <a href="#" th:href="@{/scm/orders}" class="list-group-item list-group-item-action">
+	            <i class="bi bi-box-seam"></i> 訂單管理
+	        </a>
+	        <a href="#" th:href="@{/scm/inventory}" class="list-group-item list-group-item-action">
+	            <i class="bi bi-archive"></i> 庫存管理
+	        </a>
+	        <a href="#" th:href="@{/scm/suppliers}" class="list-group-item list-group-item-action">
+	            <i class="bi bi-truck"></i> 供應商管理
+	        </a>
+	        <a href="#" th:href="@{/scm/reports}" class="list-group-item list-group-item-action">
+	            <i class="bi bi-bar-chart"></i> 報表分析
+	        </a>
+	    </div>
+	</div>
+</div>

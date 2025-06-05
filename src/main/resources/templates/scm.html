@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+	
+<head th:replace="fragments/common :: head('Portal Home')"></head>
+
+<body>
+	<div th:replace="fragments/layout :: navbar"></div>
+
+	<div id="spa-container">
+		<div th:replace="fragments/scm/layout :: sidebar"></div>
+		
+		<div class="main-content">
+		    <div th:replace="${contentFragment} :: content"></div>
+		</div>
+	</div>
+</body>
+</html>
