@@ -1,6 +1,24 @@
 <div th:fragment="content">
-	<main class="container my-5">
-	    <h3>儀表板</h3>
-	    <p>這裡是儀表板內容。</p>
-	</main>
+    <h3><i class="bi bi-speedometer2"></i> 儀表板</h3>
+    <p>這裡可以顯示關鍵指標摘要：</p>
+    <div class="row text-center">
+        <div class="col-md-3">
+            <div class="card shadow-sm p-3 mb-4">
+                <h5>今日訂單</h5>
+                <p>42 筆</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm p-3 mb-4">
+                <h5>庫存低於警戒</h5>
+                <p>5 項</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm p-3 mb-4">
+                <h5>供應商延遲</h5>
+                <p>2 筆</p>
+            </div>
+        </div>
+    </div>
 </div>

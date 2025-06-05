@@ -1,6 +1,26 @@
 <div th:fragment="content">
-	<main class="container my-5">
-	    <h3>庫存管理</h3>
-	    <p>這裡是庫存管理內容。</p>
-	</main>
+    <h3><i class="bi bi-archive"></i> 庫存管理</h3>
+    <p>檢視與調整庫存。</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>品項</th>
+                <th>庫存數量</th>
+                <th>單位</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${inventory}">
+                <td th:text="${item.name}">商品 A</td>
+                <td th:text="${item.quantity}">100</td>
+                <td th:text="${item.unit}">件</td>
+                <td>
+                    <a th:href="@{/inventory/edit/{id}(id=${item.id})}" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-pencil"></i> 調整
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

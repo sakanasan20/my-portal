@@ -1,6 +1,24 @@
 <div th:fragment="content">
-	<main class="container my-5">
-	    <h3>供應商管理</h3>
-	    <p>這裡是供應商管理內容。</p>
-	</main>
+    <h3><i class="bi bi-truck"></i> 供應商管理</h3>
+    <p>供應商聯絡資料與狀態。</p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>供應商名稱</th>
+                <th>聯絡人</th>
+                <th>電話</th>
+                <th>狀態</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="supplier : ${suppliers}">
+                <td th:text="${supplier.name}">供應商 A</td>
+                <td th:text="${supplier.contact}">張先生</td>
+                <td th:text="${supplier.phone}">0900-123456</td>
+                <td>
+                    <span th:text="${supplier.active ? '啟用' : '停用'}"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

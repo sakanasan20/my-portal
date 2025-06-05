@@ -1,6 +1,28 @@
 <div th:fragment="content">
-	<main class="container my-5">
-	    <h3>訂單管理</h3>
-	    <p>這裡是訂單管理內容。</p>
-	</main>
+    <h3><i class="bi bi-box-seam"></i> 訂單管理</h3>
+    <p>管理與查詢所有客戶訂單。</p>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>訂單編號</th>
+                <th>客戶</th>
+                <th>日期</th>
+                <th>狀態</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}">#0001</td>
+                <td th:text="${order.customer}">王小明</td>
+                <td th:text="${order.date}">2025-06-01</td>
+                <td th:text="${order.status}">處理中</td>
+                <td>
+                    <a th:href="@{/orders/view/{id}(id=${order.id})}" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-eye"></i> 查看
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
