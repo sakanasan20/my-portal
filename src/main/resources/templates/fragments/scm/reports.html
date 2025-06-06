@@ -19,10 +19,10 @@
 	<script th:src="@{/webjars/chart.js/4.4.9/dist/chart.umd.js}"></script>
     <script th:inline="javascript">
 	    /*<![CDATA[*/
-	    const monthlyLabels = [[${months}]];
-	    const monthlyOrders = [[${orderCounts}]];
-	    const inventoryLabels = [[${inventoryNames}]];
-	    const inventoryData = [[${inventoryValues}]];
+	    const monthlyLabels = /*[[${months}]]*/ [];
+	    const monthlyOrders = /*[[${orderCounts}]]*/ [];
+	    const inventoryLabels = /*[[${inventoryNames}]]*/ [];
+	    const inventoryData = /*[[${inventoryValues}]]*/ [];
 	    /*]]>*/
 	</script>
 	<script th:src="@{/js/scm/reports.js}"></script>
