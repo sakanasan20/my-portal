@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<body>
+	<div class="container my-5">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h2>IAM</h2>
+			<button class="btn btn-secondary mb-3 back-home-btn">
+				<i class="bi bi-arrow-left"></i> 返回首頁
+			</button>
+		</div>
+
+		<!-- 分頁籤 -->
+		<ul class="nav nav-tabs" id="iamTabs" role="tablist">
+			<li class="nav-item">
+				<button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#user" type="button" role="tab">User</button>
+			</li>
+			<li class="nav-item">
+				<button class="nav-link" id="role-tab" data-bs-toggle="tab" data-bs-target="#role" type="button" role="tab">Role</button>
+			</li>
+			<li class="nav-item">
+				<button class="nav-link" id="auth-tab" data-bs-toggle="tab" data-bs-target="#auth" type="button" role="tab">Authority</button>
+			</li>
+		</ul>
+
+		<!-- 分頁內容 -->
+		<div class="tab-content mt-3">
+			<!-- 使用者 -->
+			<div class="tab-pane fade show active" id="user" role="tabpanel">
+				<table id="userTable" class="table" data-toggle="table" data-search="true" data-pagination="true"></table>
+			</div>
+
+			<!-- 角色 -->
+			<div class="tab-pane fade" id="role" role="tabpanel">
+				<table id="roleTable" class="table" data-toggle="table" data-search="true" data-pagination="true"></table>
+			</div>
+
+			<!-- 權限 -->
+			<div class="tab-pane fade" id="auth" role="tabpanel">
+				<table id="authTable" class="table" data-toggle="table" data-search="true" data-pagination="true"></table>
+			</div>
+		</div>
+
+		<script th:src="@{/js/iam/common.js}"></script>
+		<script th:src="@{/js/iam/user.js}"></script>
+		<script th:src="@{/js/iam/role.js}"></script>
+		<script th:src="@{/js/iam/authority.js}"></script>
+		
+	</div>
+</body>
+</html>
