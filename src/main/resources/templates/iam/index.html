@@ -13,30 +13,36 @@
 		<!-- 分頁籤 -->
 		<ul class="nav nav-tabs" id="iamTabs" role="tablist">
 			<li class="nav-item">
-				<button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#user" type="button" role="tab">User</button>
+				<button class="nav-link active" id="userTab" data-bs-toggle="tab" data-bs-target="#userTabPage" type="button" role="tab">使用者</button>
 			</li>
 			<li class="nav-item">
-				<button class="nav-link" id="role-tab" data-bs-toggle="tab" data-bs-target="#role" type="button" role="tab">Role</button>
+				<button class="nav-link" id="roleTab" data-bs-toggle="tab" data-bs-target="#roleTabPage" type="button" role="tab">角色</button>
 			</li>
 			<li class="nav-item">
-				<button class="nav-link" id="auth-tab" data-bs-toggle="tab" data-bs-target="#auth" type="button" role="tab">Authority</button>
+				<button class="nav-link" id="authTab" data-bs-toggle="tab" data-bs-target="#authTabPage" type="button" role="tab">權限</button>
 			</li>
 		</ul>
 
 		<!-- 分頁內容 -->
 		<div class="tab-content mt-3">
 			<!-- 使用者 -->
-			<div class="tab-pane fade show active" id="user" role="tabpanel">
-				<table id="userTable" class="table" data-toggle="table" data-search="true" data-pagination="true"></table>
+			<div class="tab-pane fade show active" id="userTabPage" role="tabpanel">
+				<div id="toolbar">
+					<button id="add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
+						<i class="bi bi-person-plus"></i> 新增
+					</button>
+				</div>
+				<table id="userTable" class="table" data-toggle="table" data-search="true" data-pagination="true" data-toolbar="#toolbar"></table>
+				<div th:replace="iam/fragments :: userModal"></div>
 			</div>
 
 			<!-- 角色 -->
-			<div class="tab-pane fade" id="role" role="tabpanel">
+			<div class="tab-pane fade" id="roleTabPage" role="tabpanel">
 				<table id="roleTable" class="table" data-toggle="table" data-search="true" data-pagination="true"></table>
 			</div>
 
 			<!-- 權限 -->
-			<div class="tab-pane fade" id="auth" role="tabpanel">
+			<div class="tab-pane fade" id="authTabPage" role="tabpanel">
 				<table id="authTable" class="table" data-toggle="table" data-search="true" data-pagination="true"></table>
 			</div>
 		</div>

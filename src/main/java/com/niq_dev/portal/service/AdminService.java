@@ -32,7 +32,7 @@ public class AdminService {
     }
 
 	public List<AppSystemDto> getSystems() {
-		return apiClientService.fetchData(systemsUrl, new ParameterizedTypeReference<List<AppSystemDto>>() {});
+		return apiClientService.fetchList(systemsUrl, new ParameterizedTypeReference<List<AppSystemDto>>() {});
 	}
 
 }

@@ -33,7 +33,7 @@ public class LicenseService {
     }
 
 	public List<LicenseDto> getLicenses() {
-		return apiClientService.fetchData(licensesUrl, new ParameterizedTypeReference<List<LicenseDto>>() {});
+		return apiClientService.fetchList(licensesUrl, new ParameterizedTypeReference<List<LicenseDto>>() {});
 	}
 	
 }

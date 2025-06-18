@@ -1,0 +1,38 @@
+<!-- User Modal -->
+<div th:fragment="userModal">
+	<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="userForm">
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+					<div class="modal-header">
+						<h5 class="modal-title" id="userModalLabel">新增/修改使用者</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="關閉"></button>
+					</div>
+					<div class="modal-body">
+						<div class="mb-3">
+							<label for="username" class="form-label">使用者名稱</label> 
+							<input type="text" class="form-control" id="username" name="username" required>
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">密碼</label> 
+							<input type="password" class="form-control" id="password" name="password" required>
+						</div>
+						<div class="mb-3">
+							<label for="email" class="form-label">電子郵件</label> 
+							<input type="email" class="form-control" id="email" name="email" required>
+						</div>
+						<div class="mb-3">
+							<label for="role" class="form-label">角色</label> 
+							<select class="form-select" id="roleIds" name="roleIds" required></select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+						<button type="submit" class="btn btn-primary">確認新增</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

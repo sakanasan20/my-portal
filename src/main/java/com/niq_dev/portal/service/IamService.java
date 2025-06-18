@@ -7,6 +7,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.niq_dev.portal.dto.UserFormData;
 import com.niq_dev.portal.dto.iam.AuthorityDto;
 import com.niq_dev.portal.dto.iam.RoleDto;
 import com.niq_dev.portal.dto.iam.UserDto;
@@ -45,15 +46,19 @@ public class IamService {
     }
 
     public List<UserDto> getUsers() {
-        return apiClientService.fetchData(usersUrl, new ParameterizedTypeReference<List<UserDto>>() {});
+        return apiClientService.fetchList(usersUrl, new ParameterizedTypeReference<List<UserDto>>() {});
     }
+    
+	public UserDto createUser(UserFormData formData) {
+		return apiClientService.post(usersUrl, formData, UserDto.class);
+	}
 
     public List<RoleDto> getRoles() {
-        return apiClientService.fetchData(rolesUrl, new ParameterizedTypeReference<List<RoleDto>>() {});
+        return apiClientService.fetchList(rolesUrl, new ParameterizedTypeReference<List<RoleDto>>() {});
     }
 
     public List<AuthorityDto> getAuthorities() {
-        return apiClientService.fetchData(authoritiesUrl, new ParameterizedTypeReference<List<AuthorityDto>>() {});
+        return apiClientService.fetchList(authoritiesUrl, new ParameterizedTypeReference<List<AuthorityDto>>() {});
     }
 
 }

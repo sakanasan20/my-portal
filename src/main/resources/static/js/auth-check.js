@@ -4,7 +4,10 @@ const OAUTH2_LOGIN_URL = '/oauth2/authorization/portal-client';
 // 監控全域 AJAX 錯誤
 function handleAjaxErrors() {
 	$(document).ajaxError(function(event, jqxhr) {
-		if (!isRedirecting && (jqxhr.status === 401 || jqxhr.responseText.includes('/login'))) {
+		// console.error('AJAX error:', jqxhr);
+		const isHtml = jqxhr.getResponseHeader("Content-Type")?.includes("text/html");
+		if (!isRedirecting &&
+		    (jqxhr.status === 401 || (isHtml && responseText?.includes('/login')))) {
 			isRedirecting = true;
 			setTimeout(() => {
 				window.location.href = OAUTH2_LOGIN_URL;

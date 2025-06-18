@@ -25,27 +25,50 @@ public class ApiClientService {
     private final WebClient webClient;
     private final OAuthClientService oAuthClientService;
 
-    public <T> List<T> fetchData(String url, ParameterizedTypeReference<List<T>> typeRef) {
-        // 從 SecurityContextHolder 拿認證物件
-        var authentication = (OAuth2AuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof OAuth2AuthenticationToken)) {
-            // 使用者未登入或不是 OAuth2 登入
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized: OAuth2 authentication required");
-        }
-    	
-        OAuth2AuthorizedClient client = oAuthClientService.getAuthorizedClient(authentication, clientId);
-        if (client == null || client.getAccessToken() == null) return Collections.emptyList();
-
-        String accessToken = client.getAccessToken().getTokenValue();
-        if (accessToken.isBlank()) return Collections.emptyList();
-
-        return webClient.get()
-                .uri(url)
-                .header("Authorization", "Bearer " + accessToken)
+    public <T> List<T> fetchList(String url, ParameterizedTypeReference<List<T>> typeRef) {
+        return authorizedGet(url)
                 .retrieve()
                 .bodyToMono(typeRef)
                 .blockOptional()
                 .orElse(Collections.emptyList());
     }
-    
+	
+	public <T, R> R post(String url, T body, Class<R> responseType) {
+	    return authorizedPost(url)
+	            .bodyValue(body)
+	            .retrieve()
+	            .bodyToMono(responseType)
+	            .block();
+	}
+	
+	private String getAccessToken() {
+	    var authentication = SecurityContextHolder.getContext().getAuthentication();
+	    if (!(authentication instanceof OAuth2AuthenticationToken oauth)) {
+	        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "OAuth2 authentication required");
+	    }
+
+	    OAuth2AuthorizedClient client = oAuthClientService.getAuthorizedClient(oauth, clientId);
+	    if (client == null || client.getAccessToken() == null) {
+	        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid OAuth2 access token");
+	    }
+
+	    String token = client.getAccessToken().getTokenValue();
+	    if (token.isBlank()) {
+	        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Empty access token");
+	    }
+
+	    return token;
+	}
+	
+	private WebClient.RequestHeadersSpec<?> authorizedGet(String url) {
+	    return webClient.get()
+	            .uri(url)
+	            .header("Authorization", "Bearer " + getAccessToken());
+	}
+
+	private WebClient.RequestBodySpec authorizedPost(String url) {
+	    return webClient.post()
+	            .uri(url)
+	            .header("Authorization", "Bearer " + getAccessToken());
+	}
 }
